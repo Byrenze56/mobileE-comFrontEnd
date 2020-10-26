@@ -1,14 +1,18 @@
 import * as React from 'react';
 import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrolllView } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-  
+//Navigation-Imports--------------------------------------------------------------------------
+import { NavigationContainer } from '@react-navigation/native'; 
 import{ createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
-
-
-
+//Screen-Imports-------------------------------------------------------------------------------------
+import  IndexScreen  from './src/screens/IndexScreen';
+import ShowScreen from './src/screens/blogscreens/ShowScreen';
+import CreateScreen from './src/screens/blogscreens/CreateScreen';
+import EditScreen from './src/screens/blogscreens/EditScreen';
+import { Provider } from './src/components/context/BlogContext';
+import CoverScreenComponent from './src/screens/coverscreen/coverScreenComponent';
+//Custom-Functions---------------------------------------------------------------------------------
 
 function CustomHeader({ title, isHome, navigation }){
   return (
@@ -17,7 +21,7 @@ function CustomHeader({ title, isHome, navigation }){
         isHome ?
            <View style={{ flex:1, justifyContent: 'center' }}>
            <Image style={{ width:30, height: 30, marginLeft: 5 }}
-             source={require('./assets/money-bag.png')}
+             source={require('./assets/left-chevron.png')}
              resizeMode='contain'
            />
            </View>
@@ -26,7 +30,7 @@ function CustomHeader({ title, isHome, navigation }){
              onPress={() => navigation.goBack()}
            >
            <Image style={{ width:20, height:20, marginLeft:5 }}
-             source={require('./assets/money-bag.png')}
+             source={require('./assets/left-chevron.png')}
              resizeMode='contain'
            />
            <Text>Back</Text>
@@ -40,22 +44,29 @@ function CustomHeader({ title, isHome, navigation }){
   )
 }
 
-function HomeScreen({ navigation }){
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Home" isHome={true} navigation={navigation} />
-        <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-        <Text>Home</Text>
-          <TouchableOpacity
-           style={{ marginTop:20 }}
-           onPress={() => navigation.navigate('HomeDetail')}
-          >
-        <Text>Go home detail</Text>
-          </TouchableOpacity>
-        </View>
-    </SafeAreaView>
-  )
+const navOptionHandler = () => {
+  headerShown: false
 }
+
+
+//Temp-Home-Screens---------------------------------------------------------
+
+// function HomeScreen({ navigation }){
+//   return (
+//     <SafeAreaView style={{ flex: 1 }}>
+//       <CustomHeader title="Home" isHome={true} navigation={navigation} />
+//         <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
+//         <Text>Home</Text>
+//           <TouchableOpacity
+//            style={{ marginTop:20 }}
+//            onPress={() => navigation.navigate('HomeDetail')}
+//           >
+//         <Text>Go home detail</Text>
+//           </TouchableOpacity>
+//         </View>
+//     </SafeAreaView>
+//   )
+// }
 
 function HomeScreenDetail({ navigation }) {
   return (
@@ -68,6 +79,8 @@ function HomeScreenDetail({ navigation }) {
   );
 }
 
+//Temp-Settings-Screens---------------------------------------------------------
+
 function SettingsScreen({ navigation }){
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -76,7 +89,7 @@ function SettingsScreen({ navigation }){
         <Text>Home</Text>
          <TouchableOpacity
            style={{ marginTop:20 }}
-           onPress={() => navigation.navigate('settingDetail')}
+           onPress={() => navigation.navigate('SettingDetail')}
          >
           <Text>Go setting detail</Text>
          </TouchableOpacity>
@@ -96,12 +109,19 @@ function SettingsScreenDetail({ navigation }){
   )
 }
 
+//Temp-Shop-Screens---------------------------------------------------------
+
 function ShopScreen({ navigation }){
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <CustomHeader title="Shop screen" navigation={navigation} />
       <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-          <Text> shop</Text>
+          <TouchableOpacity
+           style={{ marginTop:20 }}
+           onPress={() => navigation.navigate('SettingDetail')}
+         >
+           <Text> shop</Text>
+         </TouchableOpacity> 
       </View>
     </SafeAreaView>
   )
@@ -110,9 +130,14 @@ function ShopScreen({ navigation }){
 function ShopItem({ navigation }){
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Setting detail" navigation={navigation} />
+      <CustomHeader title="SettingDetail" navigation={navigation} />
       <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-          <Text> shop item</Text>
+      <TouchableOpacity
+           style={{ marginTop:20 }}
+           onPress={() => navigation.navigate('OrderDetails')}
+         >
+           <Text> shop</Text>
+         </TouchableOpacity> 
       </View>
     </SafeAreaView>
   )
@@ -122,11 +147,18 @@ function OrderDetails({ navigation }){
     <SafeAreaView style={{ flex: 1 }}>
       <CustomHeader title="Order details" navigation={navigation} />
       <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-          <Text> order details</Text>
+      <TouchableOpacity
+           style={{ marginTop:20 }}
+           onPress={() => navigation.navigate('SettingDetail')}
+         >
+           <Text> shop</Text>
+         </TouchableOpacity> 
       </View>
     </SafeAreaView>
   )
 }
+
+//Temp-Video-Screens---------------------------------------------------------
 
 function VideoScreen({ navigation }){
   return (
@@ -150,16 +182,7 @@ function VideoEdit({ navigation }){
   )
 }
 
-function NotificationsScreen({ navigation }){
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Notifications" navigation={navigation} />
-      <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-          <Text>Notifications</Text>
-      </View>
-    </SafeAreaView>
-  )
-}
+//Temp-Navigations-Screens---------------------------------------------------------
 
 function ReplyScreen({ navigation }){
   return (
@@ -172,23 +195,22 @@ function ReplyScreen({ navigation }){
   )
 }
 
-const Tab = createBottomTabNavigator();
 
-const navOptionHandler = () => {
-  headerShown: false
-}
+//Home-Stack-------------------------------------------------------------------------------------
 
 const StackHome = createStackNavigator();
 
 function HomeStack() {
   return (
     <StackHome.Navigator initialRouteName="Home">
-       <StackHome.Screen name="Home" component={HomeScreen} options={navOptionHandler} />
+       <StackHome.Screen name="Home" component={CoverScreenComponent} options={navOptionHandler} />
        <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
     </StackHome.Navigator>
 
   )
 }
+
+//Settings-Stack-----------------------------------------------------------------------
 
 const StackSetting = createStackNavigator();
 
@@ -202,6 +224,8 @@ function SettingStack() {
   )
 }
 
+//Shop-Stack-------------------------------------------------------------------------
+
 const StackShop = createStackNavigator();
 
 function ShopStack() {
@@ -214,6 +238,8 @@ function ShopStack() {
   )
 }
 
+//Video-Stack-----------------------------------------------------------------------
+
 const StackVideo = createStackNavigator();
 
 function VideoStack() {
@@ -225,20 +251,29 @@ function VideoStack() {
   )
 }
 
+//Notifications-Stack-----------------------------------------------------------------
+
 const StackNotifications = createStackNavigator();
 
 function NotificationsStack() {
   return (
     <StackNotifications.Navigator initialRouteName="Notifications">
-      <StackNotifications.Screen name="Notifications" component={NotificationsScreen} />
-      <StackNotifications.Screen name="Replys" component={ReplyScreen} />
+      <StackNotifications.Screen name="Notifications" component={IndexScreen} />
+      <StackNotifications.Screen name="Create" component={CreateScreen} />
+      <StackNotifications.Screen name="Edit" component={EditScreen} />
+      <StackNotifications.Screen name="Show" component={ShowScreen} />
     </StackNotifications.Navigator>
   )
 }
+//Bottom-Tabs---------------------------------------------------------------------------
 
- function App(){
+const Tab = createBottomTabNavigator();
+
+ const App=()=>{
   return (
+
       <NavigationContainer>
+      <Provider>
         <Tab.Navigator 
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
@@ -248,10 +283,22 @@ function NotificationsStack() {
               iconName = focused
                 ? require('./assets/house.png')
                 : require('./assets/home.png');
-            } else if (route.name === 'Settings') {
+            }  if (route.name === 'Settings') {
               iconName = focused ? 
               require('./assets/controls.png')
-              : require('./assets/money-bag.png');
+              : require('./assets/controls.png');
+            } if (route.name === 'Shop') {
+              iconName = focused ? 
+              require('./assets/asset-management.png')
+              : require('./assets/carnival-mask.png');
+            }if (route.name === 'Notifications') {
+              iconName = focused ? 
+              require('./assets/speech-bubble.png')
+              : require('./assets/notifications-bell-button.png');
+            } if (route.name === 'Video') {
+              iconName = focused ? 
+              require('./assets/photo-camera.png')
+              : require('./assets/photo-camera.png');
             }
 
             // You can return any component that you like here!
@@ -269,18 +316,16 @@ function NotificationsStack() {
           <Tab.Screen name="Notifications" component={NotificationsStack} />
           <Tab.Screen name="Settings" component={SettingStack} />
         </Tab.Navigator>
+
+        </Provider>
       </NavigationContainer>
   )}
 
-  export default App;
-
-  // const App = createAppContainer(StackNav);
-
-  // export default () => {
-  //   return(
-  //     <Provider>
-  //        <App/>
-  //     </Provider>
-     
-  //   )
-  // }
+ 
+export default () => {
+  return(
+    <Provider>
+      <App/>
+    </Provider>
+  )
+}

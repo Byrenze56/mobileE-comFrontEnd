@@ -18,18 +18,18 @@ const CreateScreen = ({ navigation }) => {
     )
 };
 
-// CreateScreen.navigationOptions = ({ navigation }) => {
-//     return {
-//         headerRight: () => (
-//             <TouchableOpacity
-//              onPress={()=>
-//               navigation.navigate('Edit', {id: navigation.getParam('id')})
-//               }>
-//                 <EvilIcons name='pencil' size={35} />
-//             </TouchableOpacity>
-//         )
-//     }
-// }
+CreateScreen.navigationOptions = ({ navigation }) => {
+    return {
+        headerRight: () => (
+            <TouchableOpacity
+             onPress={()=>
+              navigation.navigate('Edit', {id: navigation.getParam('id')})
+              }>
+                <EvilIcons name='pencil' size={35} />
+            </TouchableOpacity>
+        )
+    }
+}
 
 const styles = StyleSheet.create({
 
