@@ -5,8 +5,8 @@ import { EvilIcons } from '@expo/vector-icons';
 
 const ShowScreen = ({ navigation }) => {
    const { state } = useContext(Context);
-    const { id, content} = state;
-    const blogPost = state.find((blogPost)=> blogPost.id === navigation.navigate('Create'))
+    
+     const blogPost = state.find((blogPost)=> blogPost.id === navigation.navigate('Create'))
     
     return <View>
     
