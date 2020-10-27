@@ -12,6 +12,10 @@ import CreateScreen from './src/screens/blogscreens/CreateScreen';
 import EditScreen from './src/screens/blogscreens/EditScreen';
 import { Provider } from './src/components/context/BlogContext';
 import CoverScreenComponent from './src/screens/coverscreen/coverScreenComponent';
+import ShopCateogoriesComponent from './src/screens/ShopScreens/ShopCateogoriesScreen';
+import SelectedListComponent from './src/screens/ShopScreens/SelectedListScreen';
+import ItemDetailsComponent from './src/screens/ShopScreens/ItemDetailsScreen';
+import CartComponent from './src/screens/ShopScreens/CartScreen';
 //Custom-Functions---------------------------------------------------------------------------------
 
 function CustomHeader({ title, isHome, navigation }){
@@ -111,21 +115,7 @@ function SettingsScreenDetail({ navigation }){
 
 //Temp-Shop-Screens---------------------------------------------------------
 
-function ShopScreen({ navigation }){
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Shop screen" navigation={navigation} />
-      <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-          <TouchableOpacity
-           style={{ marginTop:20 }}
-           onPress={() => navigation.navigate('SettingDetail')}
-         >
-           <Text> shop</Text>
-         </TouchableOpacity> 
-      </View>
-    </SafeAreaView>
-  )
-}
+
 
 function ShopItem({ navigation }){
   return (
@@ -231,9 +221,10 @@ const StackShop = createStackNavigator();
 function ShopStack() {
   return (
     <StackShop.Navigator initialRouteName="Shop">
-      <StackShop.Screen name="Shop" component={ShopScreen} />
-      <StackShop.Screen name="ShopItem" component={ShopItem} />
-      <StackShop.Screen name="OrderDetails" component={OrderDetails}/>
+      <StackShop.Screen name="Shop" component={ShopCateogoriesComponent} />
+      <StackShop.Screen name="Selected" component={SelectedListComponent} />
+      <StackShop.Screen name="Details" component={ItemDetailsComponent}/>
+      <StackShop.Screen name="Cart" component={CartComponent} />
     </StackShop.Navigator>
   )
 }
