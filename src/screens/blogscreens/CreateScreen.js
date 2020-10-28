@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Context } from '../../components/context/BlogContext';
-import BlogPostForm from '../../components/BlogPostForm.js';
+import BlogPostForm from '../../components/BlogPostForm';
 import { EvilIcons } from '@expo/vector-icons';
 
 const CreateScreen = ({ navigation }) => {
@@ -14,7 +14,7 @@ const CreateScreen = ({ navigation }) => {
              title, content)=> {
              addBlogPost(title, 
              content, 
-             ()=> navigation.navigate('Index'))        
+             ()=> navigation.popToTop())        
              }} 
            />
         </View>

@@ -16,9 +16,10 @@ import ShopCateogoriesComponent from './src/screens/ShopScreens/ShopCateogoriesS
 import SelectedListComponent from './src/screens/ShopScreens/SelectedListScreen';
 import ItemDetailsComponent from './src/screens/ShopScreens/ItemDetailsScreen';
 import CartComponent from './src/screens/ShopScreens/CartScreen';
+import NotificationsComponent from './src/screens/NotificationScreens/NotificationsScreen';
 //Custom-Functions---------------------------------------------------------------------------------
 
-function CustomHeader({ title, isHome, navigation }){
+export function CustomHeader({ title, isHome, navigation }){
   return (
         <View style={{ flexDirection: 'row', height:50 }}>
        {
@@ -53,100 +54,10 @@ const navOptionHandler = () => {
 }
 
 
-//Temp-Home-Screens---------------------------------------------------------
-
-// function HomeScreen({ navigation }){
-//   return (
-//     <SafeAreaView style={{ flex: 1 }}>
-//       <CustomHeader title="Home" isHome={true} navigation={navigation} />
-//         <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-//         <Text>Home</Text>
-//           <TouchableOpacity
-//            style={{ marginTop:20 }}
-//            onPress={() => navigation.navigate('HomeDetail')}
-//           >
-//         <Text>Go home detail</Text>
-//           </TouchableOpacity>
-//         </View>
-//     </SafeAreaView>
-//   )
-// }
-
-function HomeScreenDetail({ navigation }) {
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Home Detail" navigation={navigation} />
-      <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-        <Text>Home Details</Text>  
-      </View>
-    </SafeAreaView>
-  );
-}
-
-//Temp-Settings-Screens---------------------------------------------------------
-
-function SettingsScreen({ navigation }){
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Setting" isHome={true} />
-      <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-        <Text>Home</Text>
-         <TouchableOpacity
-           style={{ marginTop:20 }}
-           onPress={() => navigation.navigate('SettingDetail')}
-         >
-          <Text>Go setting detail</Text>
-         </TouchableOpacity>
-      </View>
-    </SafeAreaView>
-  )
-}
-
-function SettingsScreenDetail({ navigation }){
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Setting detail" navigation={navigation} />
-      <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-          <Text> settings detail</Text>
-      </View>
-    </SafeAreaView>
-  )
-}
-
-//Temp-Shop-Screens---------------------------------------------------------
 
 
 
-function ShopItem({ navigation }){
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="SettingDetail" navigation={navigation} />
-      <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-      <TouchableOpacity
-           style={{ marginTop:20 }}
-           onPress={() => navigation.navigate('OrderDetails')}
-         >
-           <Text> shop</Text>
-         </TouchableOpacity> 
-      </View>
-    </SafeAreaView>
-  )
-}
-function OrderDetails({ navigation }){
-  return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <CustomHeader title="Order details" navigation={navigation} />
-      <View style={{ flex:1, justifyContent:'center', alignItems: 'center' }}>
-      <TouchableOpacity
-           style={{ marginTop:20 }}
-           onPress={() => navigation.navigate('SettingDetail')}
-         >
-           <Text> shop</Text>
-         </TouchableOpacity> 
-      </View>
-    </SafeAreaView>
-  )
-}
+
 
 //Temp-Video-Screens---------------------------------------------------------
 
@@ -194,25 +105,12 @@ function HomeStack() {
   return (
     <StackHome.Navigator initialRouteName="Home">
        <StackHome.Screen name="Home" component={CoverScreenComponent} options={navOptionHandler} />
-       <StackHome.Screen name="HomeDetail" component={HomeScreenDetail} options={navOptionHandler} />
     </StackHome.Navigator>
 
   )
 }
 
-//Settings-Stack-----------------------------------------------------------------------
 
-const StackSetting = createStackNavigator();
-
-function SettingStack() {
-  return (
-    <StackSetting.Navigator initialRouteName="Setting">
-       <StackSetting.Screen name="Setting" component={SettingsScreen} options={navOptionHandler}/>
-       <StackSetting.Screen name="SettingDetail" component={SettingsScreenDetail} options={navOptionHandler} />
-    </StackSetting.Navigator>
-
-  )
-}
 
 //Shop-Stack-------------------------------------------------------------------------
 
@@ -241,6 +139,21 @@ function VideoStack() {
     </StackVideo.Navigator>
   )
 }
+//Blog-Stack-----------------------------------------------------------------------
+
+const StackBlog = createStackNavigator();
+
+function BlogStack() {
+  return (
+    <StackBlog.Navigator initialRouteName="Blog">
+       <StackBlog.Screen name="Blogs" component={IndexScreen} options={navOptionHandler}/>
+       <StackBlog.Screen name="Create" component={CreateScreen} options={navOptionHandler} />
+       <StackBlog.Screen name="Edit" component={EditScreen} />
+      <StackBlog.Screen name="Show" component={ShowScreen} />
+    </StackBlog.Navigator>
+
+  )
+}
 
 //Notifications-Stack-----------------------------------------------------------------
 
@@ -249,14 +162,11 @@ const StackNotifications = createStackNavigator();
 function NotificationsStack() {
   return (
     <StackNotifications.Navigator initialRouteName="Notifications">
-      <StackNotifications.Screen name="Notifications" component={IndexScreen} />
-      <StackNotifications.Screen name="Create" component={CreateScreen} />
-      <StackNotifications.Screen name="Edit" component={EditScreen} />
-      <StackNotifications.Screen name="Show" component={ShowScreen} />
+      <StackNotifications.Screen name="Notifications" component={NotificationsComponent} />
     </StackNotifications.Navigator>
   )
 }
-//Bottom-Tabs---------------------------------------------------------------------------
+// Bottom-Tabs---------------------------------------------------------------------------
 
 const Tab = createBottomTabNavigator();
 
@@ -274,7 +184,7 @@ const Tab = createBottomTabNavigator();
               iconName = focused
                 ? require('./assets/house.png')
                 : require('./assets/home.png');
-            }  if (route.name === 'Settings') {
+            }  if (route.name === 'Blog') {
               iconName = focused ? 
               require('./assets/controls.png')
               : require('./assets/controls.png');
@@ -304,8 +214,8 @@ const Tab = createBottomTabNavigator();
           <Tab.Screen name="Home" component={HomeStack} />
           <Tab.Screen name="Shop" component={ShopStack} />
           <Tab.Screen name="Video" component={VideoStack} />
+          <Tab.Screen name="Blog" component={BlogStack} />
           <Tab.Screen name="Notifications" component={NotificationsStack} />
-          <Tab.Screen name="Settings" component={SettingStack} />
         </Tab.Navigator>
 
         </Provider>
