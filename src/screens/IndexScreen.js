@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
         fontSize: 18
     },
     icon: {
-        fontSize: 24
+        fontSize: 24,
+        marginRight: 3
     },
     plus: {
         marginRight: 5
